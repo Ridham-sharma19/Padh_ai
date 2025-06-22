@@ -12,7 +12,7 @@ export default function SideBar() {
   };
 
   return (
-    <div className='min-h-screen shadow-md bg-yellow-500 flex flex-col gap-2 px-8  border-r-2 border-r-black'>
+    <div className='min-h-screen shadow-md bg-yellow-500 flex flex-col gap-2 px-4  border-r-2 border-r-black'>
       <div className='p-4'>
         <img src="img.png" alt="" />
       </div>
@@ -23,7 +23,7 @@ export default function SideBar() {
       </div>
       <div className='mt-20'>
           <Progress value={33} />
-          <p className='text-center mt-4 text-base'>2 out of 5</p>
+          <p className='text-center mt-2 text-base'>2 out of 5</p>
           <p className='text-center text-sm text-slate-600'>upgrade to upload more</p>
       </div>
      
