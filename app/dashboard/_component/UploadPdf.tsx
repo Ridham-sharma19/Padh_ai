@@ -93,7 +93,7 @@ try {
   return (
     <div>
       <Dialog open={open}>
-        <DialogTrigger asChild><Button className="w-full" onClick={()=>setOpen(true)}>Upload Pdf File +</Button></DialogTrigger>
+        <DialogTrigger asChild><Button className="w-full text-lg" onClick={()=>setOpen(true)}>Upload Pdf File +</Button></DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
