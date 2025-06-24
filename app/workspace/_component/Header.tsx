@@ -1,8 +1,8 @@
 
-
 import React from 'react';
-import { UserButton } from '@clerk/nextjs'; 
+import dynamic from 'next/dynamic';
 
+const UserButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.UserButton), { ssr: false });
 
 export default function Navbar() {
  
