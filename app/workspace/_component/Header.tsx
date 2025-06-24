@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 const UserButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.UserButton), { ssr: false });
 
-export default function Navbar() {
+export default function Navbar({fileName}:{fileName?:string}) {
  
   return (
     <nav className='flex justify-center   w-full py-4'> 
@@ -12,7 +12,7 @@ export default function Navbar() {
       
         <div className="flex items-center">
          
-          <span className="text-black text-lg font-semibold">Let's Get Started </span>
+          <span className="text-black text-lg font-semibold">Current Working File:-  {fileName} </span>
         </div>
 
         

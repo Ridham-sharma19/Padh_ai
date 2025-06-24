@@ -21,7 +21,7 @@ export default function WorkSpace() {
   return (
    <div>
     <div>
-       <Navbar></Navbar></div>
+       <Navbar fileName={fileInfo?.[0]?.fileName ?? "Untitled File"}></Navbar></div>
    
     <div className='grid grid-cols-2 gap-4'>
       <div className='px-4'>

@@ -23,5 +23,7 @@ export default defineSchema({
         dimensions: 768,
       }),
 
+      
+
 
 });

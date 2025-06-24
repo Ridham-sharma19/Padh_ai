@@ -36,7 +36,10 @@ export const TextEditor = () => {
     <div>
       <div>
         <EditorExt editor={editor} /> 
-        <EditorContent editor={editor} />
+        <div className='overflow-scroll h-[88vh]'>
+           <EditorContent editor={editor}
+         /></div>
+       
       </div>
     </div>
   )

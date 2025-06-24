@@ -7,6 +7,7 @@ import { useAction } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { chatSession } from '@/config/AiModel';
+import { toast } from 'sonner';
 
 interface EditorExtProps {
   editor: Editor | null;
@@ -22,6 +23,7 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
   const searchAction=useAction(api.myAction.search)
 
   const onAiClick=async()=>{
+    toast("Getting Your Answer..")
     const selectedText=editor.state.doc.textBetween(
       editor.state.selection.from,
       editor.state.selection.to,
