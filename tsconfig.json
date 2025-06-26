@@ -22,6 +22,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "convex/myAction.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "convex/myAction.js", "app/(auth)/sign-up/[[...sign-up]]/page.tsx"],
   "exclude": ["node_modules"]
 }
+

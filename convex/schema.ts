@@ -23,7 +23,11 @@ export default defineSchema({
         dimensions: 768,
       }),
 
-      
+   notes:defineTable({
+    fileId:v.string(),
+    notes:v.any(),
+    createdBy:v.string(),
+   })   
 
 
 });

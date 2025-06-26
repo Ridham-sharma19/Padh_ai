@@ -9,15 +9,14 @@ import { TextEditor } from '../_component/TextEditor';
 
 
 export default function WorkSpace() {
-    const {fileId}=useParams();
-    const fileInfo=useQuery(api.fileStorage.GetFileRecord,{
-      fileId:fileId as string
-    })
+    const {fileId} = useParams();
 
-   
-
- 
     
+    const normalizedFileId = Array.isArray(fileId) ? fileId[0] : fileId;
+
+  
+    const fileInfo = normalizedFileId ? useQuery(api.fileStorage.GetFileRecord, { fileId: normalizedFileId }) : null;
+
   return (
    <div>
     <div>

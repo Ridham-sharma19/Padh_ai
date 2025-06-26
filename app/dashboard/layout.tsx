@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import SideBar from './_component/sideNav'
+import Header from './_component/headerw'
 
 
 
@@ -11,7 +12,8 @@ export default function DashBoardlayout({children}:{children:ReactNode}) {
     <SideBar />
   </div>
   <div className="col-span-14">
-    
+
+  <Header></Header>
     <div>
         {children}
     </div>

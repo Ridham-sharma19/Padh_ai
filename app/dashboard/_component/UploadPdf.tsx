@@ -22,8 +22,15 @@ import { Loader2Icon } from "lucide-react";
 import { generateUploadUrl } from "@/convex/fileStorage";
 import { useUser } from "@clerk/nextjs";
 import axios from 'axios'
+import { toast } from "sonner";
 
-export default function UploadPdf({ children }: { children: ReactNode }) {
+
+interface UploadPdfProps {
+  children: ReactNode;
+  isMaxFile: boolean;
+}
+
+export default function UploadPdf({ children,isMaxFile }: UploadPdfProps) {
   const generatUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const {user}=useUser();
   const [open,setOpen]=useState(false);
@@ -78,22 +85,23 @@ try {
     fileId:fileId
   });
 
-  console.log(fileId);
-  console.log(embedresult);
+
+  
 } catch (error) {
   console.error("Error during document embedding:", error);
 }
 
 
-// console.log(resp);
+
     setLoading(false);
     setOpen(false);
+    toast('file is ready');
   }
 
   return (
     <div>
       <Dialog open={open}>
-        <DialogTrigger asChild><Button className="w-full text-lg" onClick={()=>setOpen(true)}>Upload Pdf File +</Button></DialogTrigger>
+        <DialogTrigger asChild><Button className="w-full text-lg" disabled={isMaxFile} onClick={()=>setOpen(true)}>Upload Pdf File +</Button></DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

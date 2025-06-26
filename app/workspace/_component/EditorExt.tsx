@@ -1,13 +1,14 @@
 'use client'
 
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { Editor } from '@tiptap/react'
 import { Bold, Italic, HighlighterIcon, Sparkle } from 'lucide-react' 
-import { useAction } from 'convex/react';
+import { useAction, useMutation, useQueries, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { chatSession } from '@/config/AiModel';
 import { toast } from 'sonner';
+import { UserButton, useUser } from '@clerk/nextjs';
 
 interface EditorExtProps {
   editor: Editor | null;
@@ -19,8 +20,14 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
     return null
   }
    const {fileId}=useParams();
+   const saveNotes=useMutation(api.notes.AddNotes);
+   const {user}=useUser();
+   const notes=useQuery(api.notes.GetNotes,{
+    fileId:fileId as string
+   })
 
-  const searchAction=useAction(api.myAction.search)
+  const searchAction=useAction(api.myAction.search);
+  
 
   const onAiClick=async()=>{
     toast("Getting Your Answer..")
@@ -49,10 +56,24 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
 
     const AllText=editor.getHTML();
     editor.commands.setContent(AllText+'<p><strong>Answer</strong>'+finalAns+'</p>')
-   
+
+    
+
+  saveNotes({
+  notes: editor.getHTML(),
+  createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+  fileId :fileId as string
+});
+
 
 
   }
+
+  useEffect(() => {
+  if (editor && notes) {
+    editor.commands.setContent(notes);
+  }
+}, [editor, notes]);
 
  
 
