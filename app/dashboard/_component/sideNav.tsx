@@ -1,12 +1,13 @@
 "use client";
 import { Button } from '@/components/ui/button';
-import { BriefcaseBusiness, Crown, Plus } from "lucide-react";
+import { BriefcaseBusiness, Crown } from "lucide-react";
 import React from 'react'; // Removed useState as it's no longer needed for sidebar state
 import { Progress } from "@/components/ui/progress";
 import UploadPdf from './UploadPdf'; // Assuming UploadPdf is correctly structured now
 import { useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import Image from 'next/image';
 
 export default function SideBar() {
   const { user } = useUser();
@@ -20,7 +21,7 @@ export default function SideBar() {
    
     <div className='min-h-screen shadow-md bg-yellow-500 flex flex-col gap-2 px-4 border-r-2 border-r-black'>
       <div className='p-4'>
-        <img src="/img.png" alt="Logo"  /> 
+        <Image src="/img.png" alt="Logo" width={100} height={100} /> 
       </div>
       <div className='flex flex-col gap-4 mt-12'>
       

@@ -1,9 +1,9 @@
 "use client"
 import { useParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Navbar from '../_component/Header';
 import PdfViewer from '../_component/PdfViewer';
-import { useQueries, useQuery } from 'convex/react';
+import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { TextEditor } from '../_component/TextEditor';
 
@@ -14,8 +14,11 @@ export default function WorkSpace() {
     
     const normalizedFileId = Array.isArray(fileId) ? fileId[0] : fileId;
 
+    if (!normalizedFileId) {
+      return null;
+    }
   
-    const fileInfo = normalizedFileId ? useQuery(api.fileStorage.GetFileRecord, { fileId: normalizedFileId }) : null;
+    const fileInfo = useQuery(api.fileStorage.GetFileRecord, { fileId: normalizedFileId });
 
   return (
    <div>

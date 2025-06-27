@@ -13,7 +13,7 @@ export default function Header() {
       
         <div className="flex items-center">
          
-          <span className="text-black text-lg font-semibold">let's get started </span>
+          <span className="text-black text-lg font-semibold">let&apos;s get started </span>
         </div>
 
         

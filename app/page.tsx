@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { api } from "../convex/_generated/api";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
@@ -14,29 +13,29 @@ export default function Home() {
   const createUser = useMutation(api.user.createUser);
 
   useEffect(() => {
+    const checkUser = async () => {
+      if (!user?.primaryEmailAddress?.emailAddress || !user?.fullName) {
+        console.warn(
+          "User data incomplete for creation, skipping create user mutation."
+        );
+        return;
+      }
+
+      try {
+        const result = await createUser({
+          email: user.primaryEmailAddress.emailAddress,
+          username: user.fullName,
+        });
+        console.log("User creation/check result:", result);
+      } catch (error) {
+        console.error("Error creating/checking user in Convex:", error);
+      }
+    };
+
     if (isLoaded && isSignedIn) {
       checkUser();
     }
-  }, [isLoaded, isSignedIn]);
-
-  const checkUser = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress || !user?.fullName) {
-      console.warn(
-        "User data incomplete for creation, skipping create user mutation."
-      );
-      return;
-    }
-
-    try {
-      const result = await createUser({
-        email: user.primaryEmailAddress.emailAddress,
-        username: user.fullName,
-      });
-      console.log("User creation/check result:", result);
-    } catch (error) {
-      console.error("Error creating/checking user in Convex:", error);
-    }
-  };
+  }, [isLoaded, isSignedIn, user, createUser]);
 
   const AuthButton = () => {
     if (!isLoaded) {

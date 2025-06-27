@@ -3,12 +3,12 @@
 import React, { ReactElement, useEffect } from 'react'
 import { Editor } from '@tiptap/react'
 import { Bold, Italic, HighlighterIcon, Sparkle } from 'lucide-react' 
-import { useAction, useMutation, useQueries, useQuery } from 'convex/react';
+import { useAction, useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { chatSession } from '@/config/AiModel';
 import { toast } from 'sonner';
-import { UserButton, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 interface EditorExtProps {
   editor: Editor | null;

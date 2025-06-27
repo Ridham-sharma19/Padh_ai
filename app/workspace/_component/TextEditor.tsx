@@ -1,14 +1,11 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Highlight from '@tiptap/extension-highlight' // Imported Highlight
 
-import { useQueries, useQuery } from 'convex/react'
-import { useAction, useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
 import EditorExt from './EditorExt'
 
 export const TextEditor = () => {
