@@ -24,10 +24,7 @@ export default function SideBar() {
       </div>
       <div className='flex flex-col gap-4 mt-12'>
       
-        <UploadPdf isMaxFile={fileList?.length as number>=5?true:false}>
-        
-          <Button className='text-lg w-full flex items-center gap-2'>Upload PDF<Plus /></Button>
-        </UploadPdf>
+<UploadPdf isMaxFile={fileList?.length as number>=5?true:false} />
 
         
         <Button className='text-lg w-full flex items-center gap-2'>Workspace<BriefcaseBusiness /></Button>
