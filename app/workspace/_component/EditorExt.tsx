@@ -16,66 +16,57 @@ interface EditorExtProps {
 }
 
 export default function EditorExt({ editor }: EditorExtProps): ReactElement | null {
+  const {fileId} = useParams();
+  const saveNotes = useMutation(api.notes.AddNotes);
+  const {user} = useUser();
+  const notes = useQuery(api.notes.GetNotes, {
+    fileId: fileId as string
+  });
+
+  const searchAction = useAction(api.myAction.search);
+
   if (!editor) {
-    return null
+    return null;
   }
-   const {fileId}=useParams();
-   const saveNotes=useMutation(api.notes.AddNotes);
-   const {user}=useUser();
-   const notes=useQuery(api.notes.GetNotes,{
-    fileId:fileId as string
-   })
 
-  const searchAction=useAction(api.myAction.search);
-  
-
-  const onAiClick=async()=>{
-    toast("Getting Your Answer..")
-    const selectedText=editor.state.doc.textBetween(
+  const onAiClick = async () => {
+    toast("Getting Your Answer..");
+    const selectedText = editor.state.doc.textBetween(
       editor.state.selection.from,
       editor.state.selection.to,
       ' '
-    )
-    const result=await searchAction({
-      query:selectedText,
-      fileId:fileId as string
-
-    })
-
-    const unFormattedAns=JSON.parse(result)
-    let AllFormatedAns='';
-    unFormattedAns&&unFormattedAns.forEach((item: { pageContent: string; }) => {
-     AllFormatedAns=AllFormatedAns+item.pageContent
-      
+    );
+    const result = await searchAction({
+      query: selectedText,
+      fileId: fileId as string
     });
 
-    const PROMPT="For question"+selectedText+"and with the given content as answer"+"please give appropriate answer in HTML format. The answer content is"+AllFormatedAns
-    
-    const AiModelResult=await chatSession.sendMessage(PROMPT);
-    const finalAns=AiModelResult.response.text().replace('```html','').replace('```','');
+    const unFormattedAns = JSON.parse(result);
+    let AllFormatedAns = '';
+    unFormattedAns && unFormattedAns.forEach((item: { pageContent: string; }) => {
+      AllFormatedAns = AllFormatedAns + item.pageContent;
+    });
 
-    const AllText=editor.getHTML();
-    editor.commands.setContent(AllText+'<p><strong>Answer</strong>'+finalAns+'</p>')
+    const PROMPT = "For question" + selectedText + "and with the given content as answer" + "please give appropriate answer in HTML format. The answer content is" + AllFormatedAns;
 
-    
+    const AiModelResult = await chatSession.sendMessage(PROMPT);
+    const finalAns = AiModelResult.response.text().replace('```html', '').replace('```', '');
 
-  saveNotes({
-  notes: editor.getHTML(),
-  createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
-  fileId :fileId as string
-});
+    const AllText = editor.getHTML();
+    editor.commands.setContent(AllText + '<p><strong>Answer</strong>' + finalAns + '</p>');
 
-
-
-  }
+    saveNotes({
+      notes: editor.getHTML(),
+      createdBy: user?.primaryEmailAddress?.emailAddress ?? "unknown",
+      fileId: fileId as string
+    });
+  };
 
   useEffect(() => {
-  if (editor && notes) {
-    editor.commands.setContent(notes);
-  }
-}, [editor, notes]);
-
- 
+    if (editor && notes) {
+      editor.commands.setContent(notes);
+    }
+  }, [editor, notes]);
 
   return (
     <div>
@@ -98,23 +89,21 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
           </button>
 
           <button
-          
-            onClick={() => editor.chain().focus().toggleHighlight().run()} 
-            
-            className={editor.isActive('highlight') ? 'text-yellow-500' : ''} 
+            onClick={() => editor.chain().focus().toggleHighlight().run()}
+            className={editor.isActive('highlight') ? 'text-yellow-500' : ''}
             title="Highlight"
           >
             <HighlighterIcon />
           </button>
           <button
-          
-            onClick={() =>onAiClick()} 
-            
-            className= 'text-yellow-500 hover:text-blue-600'
+            onClick={() => onAiClick()}
+            className='text-yellow-500 hover:text-blue-600'
             title="Highlight"
           >
             <Sparkle />
           </button>
         </div>
       </div>
-      </div>)}
+    </div>
+  );
+}

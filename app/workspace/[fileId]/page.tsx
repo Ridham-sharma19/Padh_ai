@@ -14,12 +14,12 @@ export default function WorkSpace() {
     
     const normalizedFileId = Array.isArray(fileId) ? fileId[0] : fileId;
 
+    const fileInfo = useQuery(api.fileStorage.GetFileRecord, { fileId: normalizedFileId ?? '' });
+
     if (!normalizedFileId) {
       return null;
     }
   
-    const fileInfo = useQuery(api.fileStorage.GetFileRecord, { fileId: normalizedFileId });
-
   return (
    <div>
     <div>

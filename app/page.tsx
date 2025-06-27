@@ -118,7 +118,7 @@ export default function Home() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.7 }} 
 
-       className="mt-16 text-white">
+       className="mt-16 text-slate-500">
         Made by:-
         <a
           href="https://github.com/Ridham-sharma19"
