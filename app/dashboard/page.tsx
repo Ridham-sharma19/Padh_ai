@@ -27,7 +27,7 @@ export default function Dashboard() {
             ></div>
           ))
         ) : fileList === null || fileList.length === 0 ? (
-          <div className="col-span-full text-center text-2xl text-black-500 font-medium">
+          <div className="col-span-full text-center text-2xl text-black-500 text-slate-200  font-medium">
             Start uploading your files 
           </div>
         ) : (
