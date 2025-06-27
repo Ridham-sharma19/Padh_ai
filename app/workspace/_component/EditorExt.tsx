@@ -12,22 +12,26 @@ import { useUser } from '@clerk/nextjs';
 
 interface EditorExtProps {
   editor: Editor | null;
- 
 }
 
 export default function EditorExt({ editor }: EditorExtProps): ReactElement | null {
-  const {fileId} = useParams();
+  const { fileId } = useParams();
   const saveNotes = useMutation(api.notes.AddNotes);
-  const {user} = useUser();
+  const { user } = useUser();
   const notes = useQuery(api.notes.GetNotes, {
     fileId: fileId as string
   });
 
   const searchAction = useAction(api.myAction.search);
 
-  if (!editor) {
-    return null;
-  }
+  useEffect(() => {
+    if (editor && notes) {
+      editor.commands.setContent(notes);
+    }
+  }, [editor, notes]);
+
+
+  if (!editor) return null;
 
   const onAiClick = async () => {
     toast("Getting Your Answer..");
@@ -36,6 +40,7 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
       editor.state.selection.to,
       ' '
     );
+
     const result = await searchAction({
       query: selectedText,
       fileId: fileId as string
@@ -43,12 +48,11 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
 
     const unFormattedAns = JSON.parse(result);
     let AllFormatedAns = '';
-    unFormattedAns && unFormattedAns.forEach((item: { pageContent: string; }) => {
-      AllFormatedAns = AllFormatedAns + item.pageContent;
+    unFormattedAns?.forEach((item: { pageContent: string }) => {
+      AllFormatedAns += item.pageContent;
     });
 
-    const PROMPT = "For question" + selectedText + "and with the given content as answer" + "please give appropriate answer in HTML format. The answer content is" + AllFormatedAns;
-
+    const PROMPT = `For question ${selectedText} and with the given content as answer, please give appropriate answer in HTML format. The answer content is ${AllFormatedAns}`;
     const AiModelResult = await chatSession.sendMessage(PROMPT);
     const finalAns = AiModelResult.response.text().replace('```html', '').replace('```', '');
 
@@ -61,12 +65,6 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
       fileId: fileId as string
     });
   };
-
-  useEffect(() => {
-    if (editor && notes) {
-      editor.commands.setContent(notes);
-    }
-  }, [editor, notes]);
 
   return (
     <div>
@@ -95,10 +93,11 @@ export default function EditorExt({ editor }: EditorExtProps): ReactElement | nu
           >
             <HighlighterIcon />
           </button>
+
           <button
             onClick={() => onAiClick()}
             className='text-yellow-500 hover:text-blue-600'
-            title="Highlight"
+            title="Ask AI"
           >
             <Sparkle />
           </button>
