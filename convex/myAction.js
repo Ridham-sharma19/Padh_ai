@@ -1,4 +1,4 @@
-// _generated/server.js or .ts
+
 "use node";
 
 import { ConvexVectorStore } from "@langchain/community/vectorstores/convex";
@@ -17,8 +17,9 @@ export const ingest = action({
   handler: async (ctx, args) => {
     try {
       const apiKey = process.env.GEMINI_API_KEY;
+      console.log("NEXT_PUBLIC_GEMINI_API_KEY", apiKey);
       if (!apiKey) {
-        throw new Error("GEMINI_API_KEY is not defined in .env");
+        throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is not defined in .env");
       }
 
     
@@ -60,19 +61,22 @@ export const search = action({
     try {
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
-        throw new Error("GEMINI_API_KEY is not defined in .env");
+        throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is not defined in .env");
       }
 
       if (!args.query.trim()) {
         console.warn("Search action called with empty query. Skipping search.");
-        return JSON.stringify([]); // Return empty array for empty queries
+        return JSON.stringify([]);
       }
 
+      console.log("NEXT_PUBLIC_GEMINI_API_KEY", process.env.GEMINI_API_KEY);
       const embeddings = new GoogleGenerativeAIEmbeddings({
         apiKey: apiKey,
         model: "text-embedding-004", 
         taskType: TaskType.RETRIEVAL_QUERY, 
-        
+
+       
+       
       });
 
       const vectorstore = new ConvexVectorStore(embeddings, { ctx });
@@ -89,14 +93,15 @@ export const search = action({
         return q.metadata && typeof q.metadata === 'object' && q.metadata.fileId === args.fileId;
       });
 
-      
+     
       const topFilteredResults = filteredResults.slice(0, 5); 
 
       console.log("Filtered results (top 5):", topFilteredResults);
       return JSON.stringify(topFilteredResults);
     } catch (error) {
       console.error("Error in search action:", error);
-      throw error;
+      // Return detailed error message for debugging
+      return JSON.stringify({ error: error.message, stack: error.stack });
     }
   },
 });
