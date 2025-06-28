@@ -17,9 +17,9 @@ export const ingest = action({
   handler: async (ctx, args) => {
     try {
       const apiKey = process.env.GEMINI_API_KEY;
-      console.log("NEXT_PUBLIC_GEMINI_API_KEY", apiKey);
+      console.log("GEMINI_API_KEY", apiKey);
       if (!apiKey) {
-        throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is not defined in .env");
+        throw new Error("GEMINI_API_KEY is not defined in .env");
       }
 
     
@@ -61,7 +61,7 @@ export const search = action({
     try {
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) {
-        throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is not defined in .env");
+        throw new Error("GEMINI_API_KEY is not defined in .env");
       }
 
       if (!args.query.trim()) {
@@ -69,7 +69,7 @@ export const search = action({
         return JSON.stringify([]);
       }
 
-      console.log("NEXT_PUBLIC_GEMINI_API_KEY", process.env.GEMINI_API_KEY);
+      console.log("GEMINI_API_KEY", process.env.GEMINI_API_KEY);
       const embeddings = new GoogleGenerativeAIEmbeddings({
         apiKey: apiKey,
         model: "text-embedding-004", 
