@@ -14,7 +14,7 @@ export default function Hero({ authButton }: HeroProps) {
    
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
       
-      {/* Soft Yellow Glows */}
+     
       <div className="absolute top-10 -left-10 w-96 h-96 bg-yellow-400/20 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-10 -right-10 w-96 h-96 bg-yellow-300/30 rounded-full blur-[120px] pointer-events-none" />
 

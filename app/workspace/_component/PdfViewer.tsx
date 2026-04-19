@@ -9,7 +9,7 @@ export default function PdfViewer({fileUrl}:{fileUrl:string}) {
   src={fileUrl + '#toolbar=0'}
   height='90vh'
   width='100%'
-  className='h-[90vh] border-none' // Add border-none here
+  className='h-[90vh] border-none' 
 ></iframe>
     </div>
   )

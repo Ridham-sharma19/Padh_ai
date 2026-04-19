@@ -4,7 +4,7 @@ import React from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import Highlight from '@tiptap/extension-highlight' // Imported Highlight
+import Highlight from '@tiptap/extension-highlight'
 
 import EditorExt from './EditorExt'
 

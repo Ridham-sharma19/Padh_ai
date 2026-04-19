@@ -102,7 +102,7 @@ export const search = action({
       console.error("Error in search action:", error);
       console.error("Error message:", error.message);
       console.error("Error stack:", error.stack);
-      // Return detailed error message for debugging
+     
       return JSON.stringify({ error: error.message, stack: error.stack });
     }
   },
